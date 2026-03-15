@@ -6,6 +6,7 @@ import LiveWorkflowDemo from '../components/LiveWorkflowDemo.astro';
 
 const dashboardUrl = import.meta.env.PUBLIC_DASHBOARD_URL ?? '';
 const link = (path: string) => (dashboardUrl ? new URL(path, dashboardUrl).href : path);
+const deployToCloudflareUrl = 'https://deploy.workers.cloudflare.com/?url=https://github.com/decoded-cipher/flareo';
 
 const whyItems = [
   { title: 'Edge-first', desc: 'Workflows run on Cloudflare Workers—at the edge, in 300+ cities. No cold starts, no regions to pick.', icon: 'lucide:zap' },
@@ -56,7 +57,7 @@ const features = [
         </p>
 
         <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row" style="animation: fadeInUp 0.5s ease-out 0.2s both">
-          <a href={link('/signup')} class="group btn-primary flex gap-2 px-8 py-4 text-base">
+          <a href={deployToCloudflareUrl} target="_blank" rel="noopener noreferrer" class="group btn-primary flex gap-2 px-8 py-4 text-base">
             Deploy to Cloudflare
             <Icon name="lucide:arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </a>
@@ -150,8 +151,8 @@ const features = [
             </div>
           ))}
         </div>
-        <a href={link('/signup')} class="btn-primary mt-12 inline-flex gap-2">
-          Get started
+        <a href={deployToCloudflareUrl} target="_blank" rel="noopener noreferrer" class="btn-primary mt-12 inline-flex gap-2">
+          Deploy to Cloudflare
           <Icon name="lucide:arrow-right" class="h-4 w-4" />
         </a>
       </div>
@@ -193,8 +194,8 @@ const features = [
         <p class="mt-4 text-surface-500">
           Join developers building serverless workflows on Cloudflare. One-click deploy, zero infrastructure.
         </p>
-        <a href={link('/signup')} class="btn-primary mt-8 inline-flex gap-2">
-          Deploy free
+        <a href={deployToCloudflareUrl} target="_blank" rel="noopener noreferrer" class="btn-primary mt-8 inline-flex gap-2">
+          Deploy to Cloudflare
           <Icon name="lucide:arrow-right" class="h-4 w-4" />
         </a>
       </div>

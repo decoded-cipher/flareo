@@ -3,6 +3,7 @@ node_modules/
 
 # Build / output
 dist/
+dist-dashboard/
 .output/
 .nuxt/
 .astro/
@@ -42,3 +43,6 @@ Thumbs.db
 *.swp
 *.swo
 *~
+
+# Documentation
+docs/

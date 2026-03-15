@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "nuxt dev --no-fork",
-    "build": "nuxt build"
+    "build": "nuxt build",
+    "generate": "nuxt generate"
   },
   "dependencies": {
     "@vue-flow/background": "^1.3.2",

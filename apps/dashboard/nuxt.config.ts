@@ -1,6 +1,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   compatibilityDate: "2025-07-18",
+  ssr: false,
   css: ["~/assets/css/main.css"],
   app: {
     pageTransition: { name: "page", mode: "out-in" },

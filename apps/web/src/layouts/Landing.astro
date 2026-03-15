@@ -4,6 +4,7 @@ import CloudflareLogo from '../components/CloudflareLogo.astro';
 
 const dashboardUrl = import.meta.env.PUBLIC_DASHBOARD_URL ?? '';
 const link = (path: string) => (dashboardUrl ? new URL(path, dashboardUrl).href : path);
+const deployToCloudflareUrl = 'https://deploy.workers.cloudflare.com/?url=https://github.com/decoded-cipher/flareo';
 const currentYear = new Date().getFullYear();
 ---
 
@@ -41,9 +42,9 @@ const currentYear = new Date().getFullYear();
           </a>
           <a href="#why" class="rounded-lg px-3 py-2 text-sm font-medium text-surface-500 transition-colors hover:bg-surface-100 hover:text-surface-900">Why</a>
           <a href="#features" class="rounded-lg px-3 py-2 text-sm font-medium text-surface-500 transition-colors hover:bg-surface-100 hover:text-surface-900">Features</a>
-          <a href={link('/deploy')} class="rounded-lg px-3 py-2 text-sm font-medium text-surface-500 transition-colors hover:bg-surface-100 hover:text-surface-900">Deploy</a>
+          <a href={deployToCloudflareUrl} target="_blank" rel="noopener noreferrer" class="rounded-lg px-3 py-2 text-sm font-medium text-surface-500 transition-colors hover:bg-surface-100 hover:text-surface-900">Deploy</a>
           <a href={link('/login')} class="rounded-lg px-3 py-2 text-sm font-medium text-surface-500 transition-colors hover:bg-surface-100 hover:text-surface-900">Sign in</a>
-          <a href={link('/signup')} class="btn-primary ml-2">Get started</a>
+          <a href={deployToCloudflareUrl} target="_blank" rel="noopener noreferrer" class="btn-primary ml-2">Deploy to Cloudflare</a>
         </nav>
       </div>
     </header>
