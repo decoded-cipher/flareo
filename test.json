@@ -1,0 +1,71 @@
+[
+  {
+    "id": "F5AfkhTQ88lQ_LiD4WVvm",
+    "name": "Sample Flow",
+    "description": "This is a sample flow that demonstrates how to use the HTTP, Transform, and Webhook nodes to fetch data from an API, transform it, and send it to a webhook.",
+    "nodes": [
+      {
+        "id": "vOWNXCex-KFo2iIuGfLg4",
+        "type": "http",
+        "position": { "x": 0, "y": 100 },
+        "data": {
+          "config": {
+            "url": "https://fakestoreapi.com/products?limit=1",
+            "method": "GET"
+          },
+          "nodeType": "http"
+        }
+      },
+      {
+        "id": "8iurJn5FpDBdpkWhwQIKj",
+        "type": "transform",
+        "position": { "x": 200, "y": 100 },
+        "data": { "config": { "path": "0.title" }, "nodeType": "transform" }
+      },
+      {
+        "id": "Ju6Qc0UPIURNXtdCidzGR",
+        "type": "webhook",
+        "position": { "x": 400, "y": 100 },
+        "data": {
+          "config": {
+            "url": "https://discord.com/api/webhooks/1479831788779208786/X6Aw7O5LnmMQVKTUOLwEC92PaaNigBXHNE8tC1i5Z_w494P3bTxrhXtghJn06a1kk-MN"
+          },
+          "nodeType": "webhook"
+        }
+      }
+    ],
+    "edges": [
+      { "source": "vOWNXCex-KFo2iIuGfLg4", "target": "8iurJn5FpDBdpkWhwQIKj" },
+      { "source": "8iurJn5FpDBdpkWhwQIKj", "target": "Ju6Qc0UPIURNXtdCidzGR" }
+    ],
+    "compiled": {
+      "steps": [
+        {
+          "id": "vOWNXCex-KFo2iIuGfLg4",
+          "type": "http",
+          "config": {
+            "url": "https://fakestoreapi.com/products?limit=1",
+            "method": "GET"
+          },
+          "dependsOn": []
+        },
+        {
+          "id": "8iurJn5FpDBdpkWhwQIKj",
+          "type": "transform",
+          "config": {
+            "path": "0.title"
+          },
+          "dependsOn": ["vOWNXCex-KFo2iIuGfLg4"]
+        },
+        {
+          "id": "Ju6Qc0UPIURNXtdCidzGR",
+          "type": "webhook",
+          "config": {
+            "url": "https://discord.com/api/webhooks/1479831788779208786/X6Aw7O5LnmMQVKTUOLwEC92PaaNigBXHNE8tC1i5Z_w494P3bTxrhXtghJn06a1kk-MN"
+          },
+          "dependsOn": ["8iurJn5FpDBdpkWhwQIKj"]
+        }
+      ]
+    }
+  }
+]
