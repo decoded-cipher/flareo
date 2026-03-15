@@ -1,0 +1,218 @@
+---
+import Landing from '../layouts/Landing.astro';
+import CloudflareLogo from '../components/CloudflareLogo.astro';
+import Icon from '../components/Icon.astro';
+import LiveWorkflowDemo from '../components/LiveWorkflowDemo.astro';
+
+const dashboardUrl = import.meta.env.PUBLIC_DASHBOARD_URL ?? '';
+const link = (path: string) => (dashboardUrl ? new URL(path, dashboardUrl).href : path);
+
+const whyItems = [
+  { title: 'Edge-first', desc: 'Workflows run on Cloudflare Workers—at the edge, in 300+ cities. No cold starts, no regions to pick.', icon: 'lucide:zap' },
+  { title: 'One-click deploy', desc: 'Connect your Cloudflare account and deploy. Workers, D1, R2, and Workflows—all configured for you.', icon: 'lucide:rocket' },
+  { title: 'Zero infra', desc: 'No VPCs, no Kubernetes, no servers to manage. Your workflows live entirely on Cloudflare.', icon: 'lucide:shield-check' },
+];
+
+const stack = [
+  { name: 'Workers', icon: 'lucide:cpu', desc: 'Run workflows at the edge in 300+ cities' },
+  { name: 'D1', icon: 'lucide:database', desc: 'SQLite database for flow state and metadata' },
+  { name: 'R2', icon: 'lucide:hard-drive', desc: 'Object storage for artifacts and large payloads' },
+  { name: 'Workflows', icon: 'lucide:git-branch', desc: 'Durable execution for long-running flows' },
+];
+
+const deploySteps = [
+  { title: 'Sign up', desc: 'Create your Flareo account' },
+  { title: 'Connect Cloudflare', desc: 'OAuth in one click' },
+  { title: 'Deploy', desc: 'We provision everything' },
+];
+
+const features = [
+  { title: 'Visual editor', desc: 'Drag-and-drop flow builder. Connect nodes visually—no code required.', icon: 'lucide:workflow' },
+  { title: 'Triggers & actions', desc: 'Trigger flows from webhooks, schedules, or APIs. Integrate any service.', icon: 'lucide:globe' },
+  { title: 'Transform data', desc: 'Map, filter, and reshape data between steps with built-in nodes.', icon: 'lucide:arrow-left-right' },
+  { title: 'Run at the edge', desc: 'Execute flows on Workers—globally distributed, zero cold starts.', icon: 'lucide:play' },
+  { title: 'Execution history', desc: 'Inspect every run. Debug with full logs and output.', icon: 'lucide:clipboard-list' },
+  { title: 'Extensible', desc: 'Add custom nodes via plugins. Built for the Cloudflare ecosystem.', icon: 'lucide:puzzle' },
+];
+---
+
+<Landing>
+  <div class="relative">
+    <!-- Hero -->
+    <section class="relative overflow-hidden pt-36 pb-28 md:pt-44 md:pb-36">
+      <div class="mx-auto max-w-4xl px-6 text-center">
+        <div class="mb-8 inline-flex items-center gap-2.5 rounded-2xl border border-surface-200 bg-white/80 px-4 py-2.5 shadow-soft backdrop-blur-sm">
+          <CloudflareLogo class="h-4 w-4 text-surface-500" />
+          <span class="text-sm font-medium text-surface-600">Built on the Cloudflare stack</span>
+        </div>
+
+        <h1 class="animate-fade-in text-4xl font-bold tracking-tight text-surface-900 md:text-6xl lg:text-7xl">
+          Automation builder
+          <span class="bg-gradient-to-r from-accent-500 via-accent-600 to-accent-700 bg-clip-text text-transparent"> for the edge</span>
+        </h1>
+
+        <p class="mx-auto mt-6 max-w-2xl animate-fade-in-up text-lg leading-relaxed text-surface-500 md:text-xl" style="animation-delay: 0.1s">
+          Visual workflow automation that compiles to Cloudflare Workflows. Deploy to Workers, D1, and R2—no servers, no cold starts.
+        </p>
+
+        <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row" style="animation: fadeInUp 0.5s ease-out 0.2s both">
+          <a href={link('/signup')} class="group btn-primary flex gap-2 px-8 py-4 text-base">
+            Deploy to Cloudflare
+            <Icon name="lucide:arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+          </a>
+          <a href={link('/login')} class="btn-secondary px-8 py-4 text-base">
+            Sign in
+          </a>
+        </div>
+
+        <p class="mt-6 text-sm text-surface-400">Free to start · Deploy in under 2 minutes</p>
+
+        <LiveWorkflowDemo />
+      </div>
+    </section>
+
+    <!-- Why Edge -->
+    <section id="why" class="border-t border-surface-200/60 bg-white/50 py-24 backdrop-blur-sm">
+      <div class="mx-auto max-w-6xl px-6">
+        <h2 class="scroll-reveal text-center text-3xl font-bold tracking-tight text-surface-900 md:text-4xl">
+          Why edge-native?
+        </h2>
+        <p class="scroll-reveal scroll-reveal-delay-1 mx-auto mt-4 max-w-2xl text-center text-base leading-relaxed text-surface-500">
+          Traditional automation runs on centralized servers. Flareo runs at the edge—closer to your users, in 300+ cities worldwide.
+        </p>
+
+        <div class="mt-16 grid gap-6 md:grid-cols-3">
+          {whyItems.map((item, i) => (
+            <div
+              class={`group card card-interactive p-8 scroll-reveal scroll-reveal-delay-${Math.min(i + 1, 3)}`}
+            >
+              <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-accent-50 text-accent-600 transition-colors group-hover:bg-accent-100">
+                <Icon name={item.icon} class="h-6 w-6" />
+              </div>
+              <h3 class="text-lg font-semibold text-surface-900">{item.title}</h3>
+              <p class="mt-2 leading-relaxed text-surface-500">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Stack -->
+    <section class="border-t border-surface-200/60 py-24">
+      <div class="mx-auto max-w-6xl px-6">
+        <h2 class="scroll-reveal text-center text-3xl font-bold tracking-tight text-surface-900 md:text-4xl">
+          The Cloudflare stack
+        </h2>
+        <p class="scroll-reveal scroll-reveal-delay-1 mx-auto mt-4 max-w-xl text-center text-surface-500">
+          End-to-end on Cloudflare. No third-party runtimes or vendor lock-in outside the ecosystem.
+        </p>
+
+        <div class="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {stack.map((item, i) => (
+            <div
+              class={`card card-interactive flex items-start gap-4 p-6 scroll-reveal scroll-reveal-delay-${Math.min((i % 4) + 1, 3)}`}
+            >
+              <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-surface-100 text-surface-600">
+                <Icon name={item.icon} class="h-5 w-5" />
+              </div>
+              <div>
+                <h3 class="font-semibold text-surface-900">{item.name}</h3>
+                <p class="mt-1 text-sm leading-relaxed text-surface-500">{item.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Deploy CTA -->
+    <section id="deploy" class="border-t border-surface-200/60 bg-white/50 py-24 backdrop-blur-sm">
+      <div class="mx-auto max-w-4xl px-6 text-center">
+        <h2 class="scroll-reveal text-3xl font-bold tracking-tight text-surface-900 md:text-4xl">
+          Deploy in minutes
+        </h2>
+        <p class="mx-auto mt-4 max-w-xl text-surface-500">
+          Connect your Cloudflare account. We provision Workers, D1, R2, and Workflows automatically—no manual config.
+        </p>
+        <div class="mt-12 flex flex-wrap justify-center gap-6">
+          {deploySteps.map((step, i) => (
+            <div class="flex items-center gap-4">
+              <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent-100 font-semibold text-accent-600">
+                {i + 1}
+              </div>
+              <div class="text-left">
+                <p class="font-medium text-surface-900">{step.title}</p>
+                <p class="text-sm text-surface-500">{step.desc}</p>
+              </div>
+              {i < deploySteps.length - 1 && (
+                <Icon name="lucide:chevron-right" class="hidden h-5 w-5 text-surface-300 sm:block" />
+              )}
+            </div>
+          ))}
+        </div>
+        <a href={link('/signup')} class="btn-primary mt-12 inline-flex gap-2">
+          Get started
+          <Icon name="lucide:arrow-right" class="h-4 w-4" />
+        </a>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="border-t border-surface-200/60 py-24">
+      <div class="mx-auto max-w-6xl px-6">
+        <h2 class="scroll-reveal text-center text-3xl font-bold tracking-tight text-surface-900 md:text-4xl">
+          Everything you need
+        </h2>
+        <p class="scroll-reveal scroll-reveal-delay-1 mx-auto mt-4 max-w-xl text-center text-surface-500">
+          A complete toolkit for building and running edge workflows.
+        </p>
+
+        <div class="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {features.map((feature, i) => (
+            <div
+              class={`card card-interactive group p-8 scroll-reveal scroll-reveal-delay-${Math.min((i % 3) + 1, 3)}`}
+            >
+              <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-accent-50 text-accent-600 transition-colors group-hover:bg-accent-100">
+                <Icon name={feature.icon} class="h-6 w-6" />
+              </div>
+              <h3 class="text-lg font-semibold text-surface-900">{feature.title}</h3>
+              <p class="mt-2 leading-relaxed text-surface-500">{feature.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="border-t border-surface-200/60 bg-white/50 py-24 backdrop-blur-sm">
+      <div class="scroll-reveal mx-auto max-w-3xl px-6 text-center">
+        <CloudflareLogo class="mx-auto mb-6 h-12 w-12 text-surface-300" />
+        <h2 class="text-3xl font-bold tracking-tight text-surface-900 md:text-4xl">
+          Ready to automate on the edge?
+        </h2>
+        <p class="mt-4 text-surface-500">
+          Join developers building serverless workflows on Cloudflare. One-click deploy, zero infrastructure.
+        </p>
+        <a href={link('/signup')} class="btn-primary mt-8 inline-flex gap-2">
+          Deploy free
+          <Icon name="lucide:arrow-right" class="h-4 w-4" />
+        </a>
+      </div>
+    </section>
+  </div>
+</Landing>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      }
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  );
+  document.querySelectorAll('.scroll-reveal').forEach((el) => observer.observe(el));
+</script>

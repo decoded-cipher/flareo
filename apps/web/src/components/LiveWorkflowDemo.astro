@@ -1,0 +1,233 @@
+---
+import Icon from './Icon.astro';
+
+const apiUrl = import.meta.env.PUBLIC_API_URL ?? 'http://localhost:8787';
+const dashboardUrl = import.meta.env.PUBLIC_DASHBOARD_URL ?? '';
+
+const genericSteps = [
+  [
+    { name: 'Webhook', icon: 'lucide:webhook' },
+    { name: 'Transform', icon: 'lucide:git-branch' },
+    { name: 'HTTP', icon: 'lucide:globe' },
+  ],
+  [
+    { name: 'Trigger', icon: 'lucide:play' },
+    { name: 'HTTP', icon: 'lucide:globe' },
+    { name: 'Notify', icon: 'lucide:bell' },
+  ],
+  [
+    { name: 'Webhook', icon: 'lucide:webhook' },
+    { name: 'HTTP', icon: 'lucide:globe' },
+    { name: 'Transform', icon: 'lucide:git-branch' },
+    { name: 'Notify', icon: 'lucide:bell' },
+  ],
+  [
+    { name: 'Trigger', icon: 'lucide:play' },
+    { name: 'Validate', icon: 'lucide:shield-check' },
+    { name: 'HTTP', icon: 'lucide:globe' },
+    { name: 'Transform', icon: 'lucide:git-branch' },
+    { name: 'Webhook', icon: 'lucide:webhook' },
+  ],
+  [
+    { name: 'Webhook', icon: 'lucide:webhook' },
+    { name: 'HTTP', icon: 'lucide:globe' },
+    { name: 'Transform', icon: 'lucide:git-branch' },
+    { name: 'Validate', icon: 'lucide:shield-check' },
+    { name: 'Enrich', icon: 'lucide:database' },
+    { name: 'Notify', icon: 'lucide:bell' },
+  ],
+  [
+    { name: 'Trigger', icon: 'lucide:play' },
+    { name: 'HTTP', icon: 'lucide:globe' },
+    { name: 'Transform', icon: 'lucide:git-branch' },
+    { name: 'HTTP', icon: 'lucide:globe' },
+    { name: 'Transform', icon: 'lucide:git-branch' },
+    { name: 'Webhook', icon: 'lucide:webhook' },
+  ],
+  [
+    { name: 'Webhook', icon: 'lucide:webhook' },
+    { name: 'HTTP', icon: 'lucide:globe' },
+    { name: 'Transform', icon: 'lucide:git-branch' },
+    { name: 'Validate', icon: 'lucide:shield-check' },
+    { name: 'HTTP', icon: 'lucide:globe' },
+    { name: 'Enrich', icon: 'lucide:database' },
+    { name: 'Transform', icon: 'lucide:git-branch' },
+    { name: 'Notify', icon: 'lucide:bell' },
+  ],
+];
+
+const initialNodes = genericSteps[0];
+const initialN = initialNodes.length;
+const nodeSizeClasses = initialN >= 7 ? 'h-10 w-10' : initialN >= 5 ? 'h-12 w-12' : 'h-14 w-14';
+const nodeIconSize = initialN >= 7 ? 'h-4 w-4' : initialN >= 5 ? 'h-5 w-5' : 'h-6 w-6';
+---
+
+<div class="live-workflow-demo relative mx-auto mt-8 w-full max-w-5xl min-w-0 px-2 sm:mt-16 sm:px-4" aria-hidden="true">
+  <div class="relative rounded-xl border border-surface-200/80 bg-white/90 p-3 shadow-soft-lg backdrop-blur-sm sm:rounded-2xl sm:p-6 md:p-8">
+    <div class="absolute -inset-px rounded-xl bg-gradient-to-br from-accent-400/20 via-transparent to-accent-600/10 opacity-60 sm:rounded-2xl" />
+
+    <div class="flex items-center justify-center gap-0 overflow-x-auto overflow-y-hidden pb-2 -mx-1 overscroll-x-contain" id="demo-nodes-container">
+      {initialNodes.map((node, i) => (
+        <>
+          <div class="demo-node group flex shrink-0 flex-col items-center" data-index={i}>
+            <div
+              class={`demo-node-box relative flex shrink-0 items-center justify-center rounded-xl border-2 border-surface-200 bg-surface-50 transition-all duration-300 ${nodeSizeClasses}`}
+              data-index={i}
+            >
+              <Icon name={node.icon} class={`shrink-0 ${nodeIconSize} text-surface-400`} />
+            </div>
+            <span class="demo-node-label mt-1.5 text-center text-xs font-medium max-w-[4.5rem] truncate text-surface-400" data-index={i}>
+              {node.name}
+            </span>
+          </div>
+          {i < initialNodes.length - 1 && (
+            <div class="relative mx-1 flex h-0.5 min-w-[20px] max-w-[36px] flex-1 items-center overflow-hidden rounded-full bg-surface-200 shrink-0">
+              <div class="demo-flow-line h-full bg-accent-500" data-line-index={i} style={`transition-delay: ${(i + 1) * 120}ms`} />
+            </div>
+          )}
+        </>
+      ))}
+    </div>
+
+    <div class="absolute right-3 top-3 z-10 flex items-center gap-1 rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[10px] font-medium text-emerald-700 shadow-sm sm:right-4 sm:top-4 sm:gap-1.5 sm:px-2.5 sm:py-1 sm:text-xs">
+      <span class="h-1 w-1 shrink-0 animate-pulse rounded-full bg-emerald-500 sm:h-1.5 sm:w-1.5" />
+      Live
+    </div>
+  </div>
+
+  <a
+    href={dashboardUrl ? new URL('/flows/new', dashboardUrl).href : '/flows/new'}
+    class="mt-4 flex min-h-[48px] items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-medium text-accent-600 transition-colors hover:text-accent-700 active:bg-accent-50 sm:mt-6 sm:min-h-0 sm:py-0"
+  >
+    Try the editor
+    <Icon name="lucide:arrow-right" class="h-4 w-4 shrink-0" />
+  </a>
+</div>
+
+<script define:vars={{ apiUrl, genericSteps }}>
+  const iconMap = { webhook: 'lucide:webhook', http: 'lucide:globe', transform: 'lucide:git-branch' };
+
+  function buildWorkflowsFromNodes(nodes) {
+    if (!nodes?.length) return genericSteps;
+    const combos = [];
+    const take = Math.min(5, nodes.length);
+    for (let i = 0; i < take; i++) {
+      const start = i % nodes.length;
+      const seq = [];
+      for (let j = 0; j < Math.min(6, nodes.length); j++) {
+        const n = nodes[(start + j) % nodes.length];
+        seq.push({ name: n.name, icon: iconMap[n.type] || 'lucide:box' });
+      }
+      if (seq.length >= 2) combos.push(seq);
+    }
+    return combos.length ? combos : genericSteps;
+  }
+
+  let workflowIndex = 0;
+  let activeNodeIndex = -1;
+  let apiNodes = [];
+  let displayNodes = genericSteps[0];
+
+  function updateDOM() {
+    const container = document.getElementById('demo-nodes-container');
+    if (!container) return;
+    const boxes = container.querySelectorAll('.demo-node-box');
+    const labels = container.querySelectorAll('.demo-node-label');
+    const lines = container.querySelectorAll('.demo-flow-line');
+    if (boxes.length !== displayNodes.length) return;
+
+    boxes.forEach((el, i) => {
+      const active = activeNodeIndex >= i;
+      const current = activeNodeIndex === i;
+      el.className = `demo-node-box relative flex shrink-0 items-center justify-center rounded-xl border-2 transition-all duration-300 ${displayNodes.length >= 7 ? 'h-10 w-10' : displayNodes.length >= 5 ? 'h-12 w-12' : 'h-14 w-14'} ${current ? 'border-accent-500 bg-accent-50 shadow-[0_0_20px_rgba(99,102,241,0.3)]' : active ? 'border-accent-300 bg-accent-50/50' : 'border-surface-200 bg-surface-50'}`;
+      const svg = el.querySelector('svg');
+      if (svg) {
+        svg.className = `shrink-0 ${displayNodes.length >= 7 ? 'h-4 w-4' : displayNodes.length >= 5 ? 'h-5 w-5' : 'h-6 w-6'} ${active ? 'text-accent-600' : 'text-surface-400'}`;
+      }
+      let pulse = el.querySelector('.demo-pulse');
+      if (current && !pulse) {
+        pulse = document.createElement('span');
+        pulse.className = 'demo-pulse absolute inset-0 rounded-xl';
+        el.appendChild(pulse);
+      } else if (pulse && !current) pulse.remove();
+    });
+    labels.forEach((el, i) => {
+      el.textContent = displayNodes[i].name;
+      el.className = `demo-node-label mt-1.5 text-center text-xs font-medium max-w-[4.5rem] truncate ${activeNodeIndex >= i ? 'text-surface-700' : 'text-surface-400'}`;
+    });
+    lines.forEach((el, i) => {
+      el.classList.toggle('demo-flow-active', activeNodeIndex > i);
+    });
+  }
+
+  function runCycle() {
+    activeNodeIndex = 0;
+    updateDOM();
+    const interval = setInterval(() => {
+      if (activeNodeIndex < displayNodes.length - 1) {
+        activeNodeIndex++;
+        updateDOM();
+      } else {
+        clearInterval(interval);
+        setTimeout(() => {
+          activeNodeIndex = -1;
+          workflowIndex++;
+          const workflows = apiNodes.length >= 2 ? buildWorkflowsFromNodes(apiNodes) : genericSteps;
+          const next = workflows[workflowIndex % workflows.length];
+          if (next.length !== displayNodes.length) {
+            displayNodes = next;
+            replaceContainer();
+          } else {
+            displayNodes = next;
+            updateDOM();
+          }
+          setTimeout(runCycle, 1200);
+        }, 600);
+      }
+    }, 400);
+  }
+
+  function replaceContainer() {
+    const container = document.getElementById('demo-nodes-container');
+    if (!container) return;
+    const n = displayNodes.length;
+    const nodeSize = n >= 7 ? 'h-10 w-10' : n >= 5 ? 'h-12 w-12' : 'h-14 w-14';
+    const iconSize = n >= 7 ? 'h-4 w-4' : n >= 5 ? 'h-5 w-5' : 'h-6 w-6';
+    const iconSvg = (name) => {
+      const c = 'currentColor';
+      const w = '1.5';
+      const icons = {
+        webhook: `<path fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" d="M18 16.98h-5.99c-1.66 0-3.14-.83-4.06-2.1A6 6 0 0 1 2 12c0-1.2.32-2.33.88-3.33A6 6 0 0 1 8 6.02h.02A6 6 0 0 1 14 12v.98"/><path fill="none" stroke="${c}" stroke-width="${w}" d="M22 12h-4"/>`,
+        'git-branch': `<path fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" d="M6 3v12"/><path fill="none" stroke="${c}" stroke-width="${w}" d="M18 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path fill="none" stroke="${c}" stroke-width="${w}" d="M6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" d="M15 6a9 9 0 0 0-9 9"/>`,
+        globe: `<circle cx="12" cy="12" r="10" fill="none" stroke="${c}" stroke-width="${w}"/><path fill="none" stroke="${c}" stroke-width="${w}" d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path fill="none" stroke="${c}" stroke-width="${w}" d="M2 12h20"/>`,
+        play: `<path fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" d="M6 4v16l12-8z"/>`,
+        bell: `<path fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" d="M18 8A6 6 0 1 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" d="M13.73 21a2 2 0 0 1-3.46 0"/>`,
+        'shield-check': `<path fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>`,
+        database: `<ellipse cx="12" cy="5" rx="9" ry="3" fill="none" stroke="${c}" stroke-width="${w}"/><path fill="none" stroke="${c}" stroke-width="${w}" d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path fill="none" stroke="${c}" stroke-width="${w}" d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>`,
+        box: `<path fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path fill="none" stroke="${c}" stroke-width="${w}" d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/>`,
+      };
+      const key = name.replace('lucide:', '');
+      return `<svg class="${iconSize} shrink-0 text-surface-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${icons[key] || icons.box}</svg>`;
+    };
+    let html = '';
+    displayNodes.forEach((node, i) => {
+      html += `<div class="demo-node group flex shrink-0 flex-col items-center" data-index="${i}"><div class="demo-node-box relative flex shrink-0 items-center justify-center rounded-xl border-2 border-surface-200 bg-surface-50 transition-all duration-300 ${nodeSize}" data-index="${i}">${iconSvg(node.icon)}</div><span class="demo-node-label mt-1.5 text-center text-xs font-medium max-w-[4.5rem] truncate text-surface-400" data-index="${i}">${node.name}</span></div>`;
+      if (i < displayNodes.length - 1) html += `<div class="relative mx-1 flex h-0.5 min-w-[20px] max-w-[36px] flex-1 items-center overflow-hidden rounded-full bg-surface-200 shrink-0"><div class="demo-flow-line h-full bg-accent-500" data-line-index="${i}" style="transition-delay: ${(i + 1) * 120}ms"></div></div>`;
+    });
+    container.innerHTML = html;
+    updateDOM();
+  }
+
+  (async () => {
+    try {
+      const res = await fetch(`${apiUrl}/nodes`);
+      apiNodes = await res.json();
+    } catch {
+      apiNodes = [];
+    }
+    const workflows = apiNodes.length >= 2 ? buildWorkflowsFromNodes(apiNodes) : genericSteps;
+    displayNodes = workflows[workflowIndex % workflows.length];
+    if (displayNodes.length !== genericSteps[0].length) replaceContainer();
+    setTimeout(runCycle, 600);
+  })();
+</script>

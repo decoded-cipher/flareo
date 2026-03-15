@@ -1,18 +1,44 @@
-node_modules
-.output
-.nuxt
-dist
-.wrangler
-*.log
+# Dependencies
+node_modules/
+
+# Build / output
+dist/
+.output/
+.nuxt/
+.astro/
+.wrangler/
+.turbo/
+*.tsbuildinfo
+.cache/
+
+# Database (migrations / generated)
+drizzle/
+
+# Environment and secrets
 .env
 .env.*
 !.env.example
 .dev.vars
 
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+bun-debug.log*
+
+# Test / coverage
+coverage/
+.nyc_output/
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Editor / IDE
+.idea/
+.vscode/
 *.swp
 *.swo
-.idea
-
-coverage
-.nyc_output
+*~

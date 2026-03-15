@@ -1,0 +1,55 @@
+---
+import {
+  Zap,
+  Rocket,
+  ShieldCheck,
+  Cpu,
+  Database,
+  HardDrive,
+  GitBranch,
+  Workflow,
+  Globe,
+  ArrowLeftRight,
+  Play,
+  ClipboardList,
+  Puzzle,
+  ArrowRight,
+  ChevronRight,
+  Webhook,
+  Bell,
+  Box,
+} from '@lucide/astro';
+
+interface Props {
+  name: string;
+  class?: string;
+}
+
+const { name: rawName, class: className = '' } = Astro.props;
+const name = rawName.replace(/^lucide:/, '').toLowerCase();
+
+const iconMap: Record<string, any> = {
+  zap: Zap,
+  rocket: Rocket,
+  'shield-check': ShieldCheck,
+  cpu: Cpu,
+  database: Database,
+  'hard-drive': HardDrive,
+  'git-branch': GitBranch,
+  workflow: Workflow,
+  globe: Globe,
+  'arrow-left-right': ArrowLeftRight,
+  play: Play,
+  'clipboard-list': ClipboardList,
+  puzzle: Puzzle,
+  'arrow-right': ArrowRight,
+  'chevron-right': ChevronRight,
+  webhook: Webhook,
+  bell: Bell,
+  box: Box,
+};
+
+const IconComponent = iconMap[name] ?? Box;
+---
+
+<IconComponent class={className} strokeWidth={1.5} size={24} />
