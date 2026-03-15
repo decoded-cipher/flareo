@@ -3,6 +3,7 @@ import { defineNode } from "@flareo/sdk"
 export default defineNode({
   type: "http",
   name: "HTTP Request",
+  icon: "lucide:globe",
   category: "core",
   provider: "Built-in",
   description: "Make an HTTP request to any URL",

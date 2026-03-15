@@ -6,7 +6,8 @@ const DEFAULT_WEBHOOK =
 export default defineNode({
   type: "webhook",
   name: "Webhook",
-  category: "utility",
+  icon: "lucide:send",
+  category: "core",
   provider: "Built-in",
   description: "Send data to a webhook URL",
   tags: ["webhook", "discord", "notify"],

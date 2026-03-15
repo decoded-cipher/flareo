@@ -13,7 +13,8 @@ function getByPath(obj, path) {
 export default defineNode({
   type: "transform",
   name: "Transform",
-  category: "transform",
+  icon: "lucide:arrow-left-right",
+  category: "core",
   provider: "Built-in",
   description: "Extract a value from input data using a path",
   tags: ["data", "extract", "jsonpath"],

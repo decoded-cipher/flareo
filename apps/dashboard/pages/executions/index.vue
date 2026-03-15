@@ -1,18 +1,18 @@
 <template>
-  <div class="p-8">
-    <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+  <div class="min-h-full w-full p-5">
+    <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
       <div>
-        <h1 class="text-2xl font-bold text-surface-900">Executions</h1>
-        <p class="mt-1 text-surface-500">All workflow runs and their status.</p>
+        <h1 class="text-xl font-semibold text-surface-900">Executions</h1>
+        <p class="mt-0.5 text-xs text-surface-500">All workflow runs and their status.</p>
       </div>
       <div class="flex items-center gap-2">
-        <div class="flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-medium text-emerald-700">
-          <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500" />
+        <div class="flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[11px] font-medium text-emerald-700">
+          <span class="h-1 w-1 animate-pulse rounded-full bg-emerald-500" />
           Live
         </div>
         <select
           v-model="statusFilter"
-          class="input-base w-auto min-w-[140px] py-2"
+          class="input-base w-auto min-w-[120px] py-1.5 text-xs"
         >
           <option value="">All statuses</option>
           <option value="running">Running</option>
@@ -24,64 +24,64 @@
     </div>
 
     <!-- Loading -->
-    <div v-if="loading" class="space-y-2">
-      <div v-for="i in 8" :key="i" class="card flex animate-pulse items-center gap-4 p-4">
-        <div class="h-10 w-10 rounded-xl bg-surface-200" />
-        <div class="flex-1 space-y-2">
-          <div class="h-4 w-48 rounded bg-surface-200" />
-          <div class="h-3 w-32 rounded bg-surface-100" />
+    <div v-if="loading" class="space-y-1.5">
+      <div v-for="i in 8" :key="i" class="card flex animate-pulse items-center gap-3 p-3">
+        <div class="h-8 w-8 rounded-lg bg-surface-200" />
+        <div class="flex-1 space-y-1.5">
+          <div class="h-3.5 w-40 rounded bg-surface-200" />
+          <div class="h-2.5 w-28 rounded bg-surface-100" />
         </div>
       </div>
     </div>
 
-    <div v-else-if="error" class="card rounded-2xl border-red-200 bg-red-50 p-6 text-red-600">
+    <div v-else-if="error" class="card rounded-xl border-red-200 bg-red-50 p-4 text-sm text-red-600">
       {{ error }}
     </div>
 
-    <div v-else-if="executions.length === 0" class="card flex flex-col items-center justify-center rounded-2xl border-dashed border-surface-200 p-16 text-center">
-      <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-surface-100 text-surface-400">
-        <AppIcon name="lucide:zap" class="h-8 w-8" />
+    <div v-else-if="executions.length === 0" class="card flex flex-col items-center justify-center rounded-xl border-dashed border-surface-200 p-10 text-center">
+      <div class="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-surface-100 text-surface-400">
+        <AppIcon name="lucide:zap" class="h-5 w-5" />
       </div>
-      <p class="text-lg font-medium text-surface-600">No executions yet</p>
-      <p class="mt-2 text-surface-500">Run a workflow from the editor to see executions here.</p>
-      <NuxtLink to="/flows" class="btn-primary mt-6 no-underline">
+      <p class="text-sm font-medium text-surface-600">No executions yet</p>
+      <p class="mt-1 text-xs text-surface-500">Run a workflow from the editor to see executions here.</p>
+      <NuxtLink to="/flows" class="btn-primary mt-4 no-underline">
         Open flows
       </NuxtLink>
     </div>
 
-    <div v-else class="space-y-2">
+    <div v-else class="space-y-1.5">
       <NuxtLink
         v-for="(run, i) in executions"
         :key="run.id"
         :to="`/runs/${run.id}`"
-        class="group card card-interactive flex items-center justify-between gap-4 p-4 no-underline transition-all"
+        class="group card card-interactive flex items-center justify-between gap-3 p-3 no-underline transition-all"
         :style="`animation: countUp 0.3s ease-out ${Math.min(i * 0.03, 0.2)}s both`"
       >
-        <div class="flex min-w-0 flex-1 items-center gap-4">
+        <div class="flex min-w-0 flex-1 items-center gap-3">
           <span
-            class="h-2.5 w-2.5 shrink-0 rounded-full"
+            class="h-1.5 w-1.5 shrink-0 rounded-full"
             :class="statusDotClass(run.status)"
           />
           <div class="min-w-0 flex-1">
-            <p class="truncate font-medium text-surface-900">
+            <p class="truncate text-sm font-medium text-surface-900">
               {{ run.flow_id?.slice(0, 8) || "Unknown flow" }}
             </p>
-            <p class="mt-0.5 font-mono text-xs text-surface-500">
+            <p class="mt-0.5 font-mono text-[11px] text-surface-500">
               {{ run.id }}
             </p>
           </div>
-          <span class="shrink-0 text-sm text-surface-500">
+          <span class="shrink-0 text-xs text-surface-500">
             {{ formatDate(run.created_at) }}
           </span>
         </div>
-        <div class="flex shrink-0 items-center gap-3">
+        <div class="flex shrink-0 items-center gap-2">
           <span
-            class="rounded-full px-2.5 py-1 text-xs font-medium"
+            class="rounded-full px-1.5 py-0.5 text-[11px] font-medium"
             :class="statusBadgeClass(run.status)"
           >
             {{ run.status }}
           </span>
-          <AppIcon name="lucide:chevron-right" class="h-4 w-4 text-surface-400 transition-transform group-hover:translate-x-0.5" />
+          <AppIcon name="lucide:chevron-right" class="h-3.5 w-3.5 text-surface-400 transition-transform group-hover:translate-x-0.5" />
         </div>
       </NuxtLink>
     </div>

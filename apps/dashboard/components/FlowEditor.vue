@@ -1,11 +1,11 @@
 <template>
-  <div class="flow-editor flex h-full w-full flex-col">
+  <div class="flow-editor flex min-h-full h-full w-full min-w-full flex-col">
     <!-- Top bar -->
-    <header class="editor-topbar flex shrink-0 items-center justify-between gap-4 border-b border-surface-200 bg-white px-4 py-2.5">
-      <div class="flex min-w-0 flex-1 items-center gap-3">
+    <header class="editor-topbar flex shrink-0 items-center justify-between gap-3 border-b border-surface-200 bg-white px-4 py-2.5">
+      <div class="flex min-w-0 flex-1 items-center gap-2.5">
         <NuxtLink
           to="/flows"
-          class="flex shrink-0 items-center gap-2 rounded-xl px-2.5 py-2 text-sm font-medium text-surface-500 transition-colors hover:bg-surface-100 hover:text-surface-900"
+          class="flex shrink-0 items-center gap-2 rounded-lg px-2.5 py-2 text-sm font-medium text-surface-500 transition-colors hover:bg-surface-100 hover:text-surface-900"
         >
           <AppIcon name="lucide:arrow-left" class="h-4 w-4" />
           <span class="hidden sm:inline">Back</span>
@@ -15,7 +15,7 @@
           v-model="flowName"
           type="text"
           placeholder="Untitled workflow"
-          class="editor-name-input max-w-[280px] truncate rounded-xl border border-transparent bg-transparent px-2.5 py-1.5 text-sm font-semibold text-surface-900 outline-none placeholder:text-surface-400 focus:border-surface-300 focus:bg-surface-50"
+          class="editor-name-input max-w-[240px] truncate rounded-lg border border-transparent bg-transparent px-2.5 py-1.5 text-sm font-semibold text-surface-900 outline-none placeholder:text-surface-400 focus:border-surface-300 focus:bg-surface-50"
         />
         <span
           v-if="hasUnsavedChanges"
@@ -33,10 +33,10 @@
       </div>
       <div class="flex shrink-0 items-center gap-2">
         <!-- Zoom controls (compact) -->
-        <div class="editor-zoom-controls hidden items-center gap-0.5 rounded-xl border border-surface-200 bg-white p-0.5 shadow-soft md:flex">
+        <div class="editor-zoom-controls hidden items-center gap-0.5 rounded-lg border border-surface-200 bg-white p-1 shadow-soft md:flex">
           <button
             type="button"
-            class="rounded-lg p-1.5 text-surface-500 transition-colors hover:bg-surface-100 hover:text-surface-900"
+            class="rounded-md p-1.5 text-surface-500 transition-colors hover:bg-surface-100 hover:text-surface-900"
             title="Zoom out"
             @click="vueFlowRef?.zoomOut()"
           >
@@ -44,15 +44,15 @@
           </button>
           <button
             type="button"
-            class="min-w-[3rem] rounded-lg px-2 py-1 text-xs font-medium text-surface-500"
+            class="min-w-[3rem] rounded-md px-2 py-1 text-xs font-medium text-surface-500"
             title="Reset zoom"
-            @click="vueFlowRef?.fitView({ padding: 0.4, duration: 200 })"
+            @click="vueFlowRef?.fitView({ padding: 0.25, duration: 200 })"
           >
             {{ Math.round((viewport?.zoom ?? 1) * 100) }}%
           </button>
           <button
             type="button"
-            class="rounded-lg p-1.5 text-surface-500 transition-colors hover:bg-surface-100 hover:text-surface-900"
+            class="rounded-md p-1.5 text-surface-500 transition-colors hover:bg-surface-100 hover:text-surface-900"
             title="Zoom in"
             @click="vueFlowRef?.zoomIn()"
           >
@@ -61,54 +61,54 @@
         </div>
         <button
           type="button"
-          class="btn-secondary rounded-xl py-2 px-4 text-sm"
+          class="btn-secondary py-2 px-3.5 text-sm"
           :disabled="saving"
           @click="save"
         >
-          <span v-if="saving" class="inline-block h-4 w-4 animate-spin rounded-full border-2 border-surface-400 border-t-transparent" />
+          <span v-if="saving" class="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-surface-400 border-t-transparent" />
           <span v-else>Save</span>
         </button>
         <button
           v-if="flowId"
           type="button"
-          class="btn-primary rounded-xl py-2 px-4 text-sm"
+          class="btn-primary py-2 px-3.5 text-sm"
           :disabled="running || !nodes.length"
           @click="run"
         >
-          <span v-if="running" class="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+          <span v-if="running" class="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent" />
           <AppIcon v-else name="lucide:play" class="h-4 w-4" />
           Run
         </button>
         <div class="relative" ref="menuTriggerRef">
           <button
             type="button"
-            class="rounded-xl p-2 text-surface-500 transition-colors hover:bg-surface-100 hover:text-surface-900"
+            class="rounded-lg p-2 text-surface-500 transition-colors hover:bg-surface-100 hover:text-surface-900"
             aria-label="More options"
             @click="showMoreMenu = !showMoreMenu"
           >
-            <AppIcon name="lucide:more-vertical" class="h-5 w-5" />
+            <AppIcon name="lucide:more-vertical" class="h-4 w-4" />
           </button>
           <div
             v-if="showMoreMenu"
-            class="editor-dropdown absolute right-0 top-full z-50 mt-1 min-w-[180px] rounded-2xl border border-surface-200 bg-white shadow-soft-lg"
+            class="editor-dropdown absolute right-0 top-full z-50 mt-1 min-w-[160px] rounded-xl border border-surface-200 bg-white py-1 shadow-soft-lg"
           >
             <NuxtLink
               to="/flows"
-              class="block px-4 py-2.5 text-sm text-surface-700 transition-colors hover:bg-surface-50 hover:text-surface-900"
+              class="block px-3.5 py-2 text-sm text-surface-700 transition-colors hover:bg-surface-50 hover:text-surface-900"
               @click="showMoreMenu = false"
             >
               All workflows
             </NuxtLink>
             <NuxtLink
               to="/executions"
-              class="block px-4 py-2.5 text-sm text-surface-700 transition-colors hover:bg-surface-50 hover:text-surface-900"
+              class="block px-3.5 py-2 text-sm text-surface-700 transition-colors hover:bg-surface-50 hover:text-surface-900"
               @click="showMoreMenu = false"
             >
               View executions
             </NuxtLink>
             <button
               type="button"
-              class="block w-full px-4 py-2.5 text-left text-sm text-surface-700 transition-colors hover:bg-surface-50 hover:text-surface-900"
+              class="block w-full px-3.5 py-2 text-left text-sm text-surface-700 transition-colors hover:bg-surface-50 hover:text-surface-900"
               @click="fitView(); showMoreMenu = false"
             >
               Fit to screen
@@ -139,7 +139,7 @@
           :snap-to-grid="true"
           :snap-grid="[16, 16]"
           fit-view-on-init
-          :fit-view-options="{ padding: 0.4, duration: 0 }"
+          :fit-view-options="{ padding: 0.25, duration: 0 }"
           pan-on-drag
           zoom-on-scroll
           zoom-on-pinch
@@ -163,19 +163,19 @@
             position="top-center"
             class="!left-1/2 !right-auto !-translate-x-1/2 !bg-transparent !border-0"
           >
-            <div class="editor-empty-state group rounded-2xl border-2 border-dashed border-surface-300 bg-white/95 px-10 py-8 text-center shadow-soft-lg backdrop-blur-sm transition-all duration-300 hover:border-accent-300 hover:shadow-accent/20">
-              <div class="editor-empty-icon relative mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-2xl bg-accent-50 transition-transform duration-300 group-hover:scale-105">
-                <div class="editor-empty-float absolute inset-0 rounded-2xl bg-accent-100/50" />
-                <AppIcon name="lucide:plus" class="relative h-9 w-9 text-accent-600" />
+            <div class="editor-empty-state group rounded-xl border-2 border-dashed border-surface-300 bg-white/95 px-8 py-6 text-center shadow-soft-lg backdrop-blur-sm transition-all duration-300 hover:border-accent-300 hover:shadow-accent/20">
+              <div class="editor-empty-icon relative mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-xl bg-accent-50 transition-transform duration-300 group-hover:scale-105">
+                <div class="editor-empty-float absolute inset-0 rounded-xl bg-accent-100/50" />
+                <AppIcon name="lucide:plus" class="relative h-7 w-7 text-accent-600" />
               </div>
-              <h3 class="mb-1 text-lg font-semibold text-surface-900">Add your first step</h3>
-              <p class="mb-5 max-w-sm text-sm text-surface-500">
+              <h3 class="mb-1 text-base font-semibold text-surface-900">Add your first step</h3>
+              <p class="mb-4 max-w-sm text-sm text-surface-500">
                 Pick a node from the left panel or drag one onto the canvas.
               </p>
               <p class="text-xs text-surface-400">
-                <kbd class="rounded border border-surface-200 bg-surface-50 px-1.5 py-0.5 font-mono">Drag</kbd>,
-                <kbd class="rounded border border-surface-200 bg-surface-50 px-1.5 py-0.5 font-mono">Click</kbd>, or
-                <kbd class="rounded border border-surface-200 bg-surface-50 px-1.5 py-0.5 font-mono">N</kbd> to add
+                <kbd class="rounded border border-surface-200 bg-surface-50 px-1.5 py-0.5 font-mono text-xs">Drag</kbd>,
+                <kbd class="rounded border border-surface-200 bg-surface-50 px-1.5 py-0.5 font-mono text-xs">Click</kbd>, or
+                <kbd class="rounded border border-surface-200 bg-surface-50 px-1.5 py-0.5 font-mono text-xs">N</kbd> to add
               </p>
             </div>
           </Panel>
@@ -183,7 +183,7 @@
           <Panel position="bottom-right" class="!m-3">
             <button
               type="button"
-              class="editor-fab group flex h-12 w-12 items-center justify-center rounded-2xl border border-surface-200 bg-white text-surface-600 shadow-soft transition-all duration-200 hover:border-accent-300 hover:bg-accent-50 hover:text-accent-600 hover:shadow-accent/20"
+              class="editor-fab group flex h-10 w-10 items-center justify-center rounded-xl border border-surface-200 bg-white text-surface-600 shadow-soft transition-all duration-200 hover:border-accent-300 hover:bg-accent-50 hover:text-accent-600 hover:shadow-accent/20"
               title="Add node (N)"
               @click="focusAddNode"
             >
@@ -192,31 +192,31 @@
           </Panel>
           <!-- Zoom / Fit controls on canvas -->
           <Panel position="bottom-left" class="!m-3">
-            <div class="flex flex-col gap-1 rounded-2xl border border-surface-200 bg-white p-1 shadow-soft">
+            <div class="flex flex-col gap-1 rounded-xl border border-surface-200 bg-white p-1 shadow-soft">
               <button
                 type="button"
-                class="rounded-xl p-2 text-surface-500 transition-colors hover:bg-surface-100 hover:text-surface-900"
+                class="rounded-lg p-2 text-surface-500 transition-colors hover:bg-surface-100 hover:text-surface-900"
                 title="Zoom in"
                 @click="vueFlowRef?.zoomIn()"
               >
-              <AppIcon name="lucide:plus" class="h-4 w-4" />
-            </button>
-            <button
-              type="button"
-              class="rounded-xl p-2 text-surface-500 transition-colors hover:bg-surface-100 hover:text-surface-900"
-              title="Zoom out"
-              @click="vueFlowRef?.zoomOut()"
-            >
-              <AppIcon name="lucide:minus" class="h-4 w-4" />
-            </button>
-            <button
-              type="button"
-              class="rounded-xl p-2 text-surface-500 transition-colors hover:bg-surface-100 hover:text-surface-900"
-              title="Fit view"
-              @click="fitView()"
-            >
-              <AppIcon name="lucide:maximize-2" class="h-4 w-4" />
-            </button>
+                <AppIcon name="lucide:plus" class="h-4 w-4" />
+              </button>
+              <button
+                type="button"
+                class="rounded-lg p-2 text-surface-500 transition-colors hover:bg-surface-100 hover:text-surface-900"
+                title="Zoom out"
+                @click="vueFlowRef?.zoomOut()"
+              >
+                <AppIcon name="lucide:minus" class="h-4 w-4" />
+              </button>
+              <button
+                type="button"
+                class="rounded-lg p-2 text-surface-500 transition-colors hover:bg-surface-100 hover:text-surface-900"
+                title="Fit view"
+                @click="fitView()"
+              >
+                <AppIcon name="lucide:maximize-2" class="h-4 w-4" />
+              </button>
             </div>
           </Panel>
         </VueFlow>
@@ -232,7 +232,7 @@
           >
             <div class="absolute inset-0 bg-surface-900/20 backdrop-blur-sm" aria-hidden="true" />
             <div
-              class="config-overlay-panel relative flex h-full w-full max-w-[320px] flex-col border-l border-surface-200 bg-white shadow-soft-lg"
+              class="config-overlay-panel relative flex h-full w-full max-w-[300px] flex-col border-l border-surface-200 bg-white shadow-soft-lg"
               @click.stop
             >
               <EditorConfigPanel
@@ -284,7 +284,7 @@ const nodePaletteRef = ref(null)
 const addNodeTrigger = ref(0)
 const toastMessage = ref("")
 let toastTimer
-const defaultViewport = { x: 0, y: 0, zoom: 0.85 }
+const defaultViewport = { x: 0, y: 0, zoom: 0.6 }
 const infiniteExtent = [
   [Number.NEGATIVE_INFINITY, Number.NEGATIVE_INFINITY],
   [Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY],

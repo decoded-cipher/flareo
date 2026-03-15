@@ -1,11 +1,11 @@
 <template>
   <aside class="editor-config-panel flex h-full w-full flex-col bg-white">
     <div v-if="selectedNodeDef" class="flex min-h-0 flex-1 flex-col overflow-hidden">
-      <div class="flex shrink-0 items-center justify-between border-b border-surface-200 px-4 py-3">
+      <div class="flex shrink-0 items-center justify-between border-b border-surface-200 px-4 py-2.5">
         <h2 class="truncate text-sm font-semibold text-surface-900">{{ selectedNodeDef.name }}</h2>
         <button
           type="button"
-          class="shrink-0 rounded-xl p-1.5 text-surface-500 transition-colors hover:bg-surface-100 hover:text-surface-700"
+          class="shrink-0 rounded-lg p-1.5 text-surface-500 transition-colors hover:bg-surface-100 hover:text-surface-700"
           title="Deselect"
           @click="$emit('deselect')"
         >
@@ -91,7 +91,7 @@
               v-else-if="field.type === 'json'"
               :value="formatJson(getVal(key))"
               class="input-base w-full font-mono text-sm resize-y"
-              rows="6"
+              rows="5"
               :placeholder="field.placeholder || '{}'"
               @input="setJsonVal(key, $event.target.value)"
             />

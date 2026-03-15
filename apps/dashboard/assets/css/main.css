@@ -29,27 +29,27 @@
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-accent-500 px-5 py-2.5 text-sm font-semibold text-white shadow-accent transition-all duration-200 hover:bg-accent-600 hover:shadow-lg active:scale-[0.98];
+    @apply inline-flex items-center justify-center gap-1.5 rounded-lg bg-accent-500 px-3.5 py-2 text-xs font-semibold text-white shadow-accent transition-all duration-200 hover:bg-accent-600 hover:shadow-lg active:scale-[0.98];
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-surface-200 bg-white px-5 py-2.5 text-sm font-medium text-surface-700 transition-all duration-200 hover:border-surface-300 hover:bg-surface-50 active:scale-[0.98];
+    @apply inline-flex items-center justify-center gap-1.5 rounded-lg border border-surface-200 bg-white px-3.5 py-2 text-xs font-medium text-surface-700 transition-all duration-200 hover:border-surface-300 hover:bg-surface-50 active:scale-[0.98];
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-medium text-surface-600 transition-colors hover:bg-surface-100 hover:text-surface-900;
+    @apply inline-flex items-center justify-center gap-1.5 rounded-lg px-3.5 py-2 text-xs font-medium text-surface-600 transition-colors hover:bg-surface-100 hover:text-surface-900;
   }
 
   .card {
-    @apply rounded-2xl border border-surface-200/80 bg-white shadow-soft transition-all duration-200 hover:border-surface-200 hover:shadow-soft-lg;
+    @apply rounded-xl border border-surface-200/80 bg-white shadow-soft transition-all duration-200 hover:border-surface-200 hover:shadow-soft-lg;
   }
 
   .card-elevated {
-    @apply rounded-2xl border border-surface-200 bg-white shadow-soft-lg;
+    @apply rounded-xl border border-surface-200 bg-white shadow-soft-lg;
   }
 
   .input-base {
-    @apply w-full rounded-xl border border-surface-200 bg-white px-4 py-2.5 text-sm text-surface-900 placeholder-surface-400 outline-none transition-all duration-200 focus:border-accent-500 focus:ring-2 focus:ring-accent-500/10;
+    @apply w-full rounded-lg border border-surface-200 bg-white px-3 py-2 text-sm text-surface-900 placeholder-surface-400 outline-none transition-all duration-200 focus:border-accent-500 focus:ring-2 focus:ring-accent-500/10;
   }
 }
 
@@ -67,11 +67,14 @@
   --vf-node-color: #e5e5e5;
   --vf-handle: #6366f1;
   --vf-box-shadow: #6366f1;
-  border-radius: 12px !important;
+  border-radius: 10px !important;
   border: 1px solid #e5e5e5 !important;
   background: #ffffff !important;
   color: #171717 !important;
-  box-shadow: 0 2px 12px -4px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 10px -2px rgba(0, 0, 0, 0.08);
+  font-size: 13px !important;
+  padding: 8px 12px !important;
+  min-height: auto !important;
 }
 
 .vue-flow__node-default:hover,
@@ -109,11 +112,11 @@
 }
 
 .vue-flow__controls {
-  @apply rounded-xl border border-surface-200 bg-white shadow-soft;
+  @apply rounded-lg border border-surface-200 bg-white shadow-soft;
 }
 
 .vue-flow__minimap {
-  @apply rounded-xl border border-surface-200 bg-white shadow-soft;
+  @apply rounded-lg border border-surface-200 bg-white shadow-soft;
 }
 
 .vue-flow__attribution {
@@ -177,7 +180,7 @@
 }
 
 .editor-empty-state kbd {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
 }
 
 .editor-empty-float {

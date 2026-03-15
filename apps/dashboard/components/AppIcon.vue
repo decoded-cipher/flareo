@@ -24,6 +24,12 @@ import {
   ArrowLeftRight,
   ClipboardList,
   Puzzle,
+  Send,
+  Layers,
+  PanelRightOpen,
+  PanelRightClose,
+  GripVertical,
+  SearchX,
 } from "lucide-vue-next";
 
 const iconMap: Record<string, any> = {
@@ -33,6 +39,7 @@ const iconMap: Record<string, any> = {
   "arrow-left": ArrowLeft,
   zap: Zap,
   search: Search,
+  "search-x": SearchX,
   "chevron-down": ChevronDown,
   box: Box,
   minus: Minus,
@@ -51,6 +58,11 @@ const iconMap: Record<string, any> = {
   "arrow-left-right": ArrowLeftRight,
   "clipboard-list": ClipboardList,
   puzzle: Puzzle,
+  send: Send,
+  layers: Layers,
+  "panel-right-open": PanelRightOpen,
+  "panel-right-close": PanelRightClose,
+  "grip-vertical": GripVertical,
 };
 
 const props = withDefaults(
