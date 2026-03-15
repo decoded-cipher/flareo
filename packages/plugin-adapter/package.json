@@ -1,0 +1,16 @@
+{
+  "name": "@flareo/plugin-adapter",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "index.ts",
+  "exports": {
+    ".": "./index.ts"
+  },
+  "dependencies": {
+    "@flareo/nodes": "workspace:*",
+    "@flareo/sdk": "workspace:*"
+  },
+  "scripts": {
+    "build": "true"
+  }
+}
