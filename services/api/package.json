@@ -1,0 +1,12 @@
+{
+  "name": "flareo-api",
+  "version": "0.1.0",
+  "type": "module",
+  "dependencies": {
+    "@flareo/compiler": "workspace:*",
+    "@flareo/plugin-adapter": "workspace:*",
+    "@flareo/workflow-runtime": "workspace:*",
+    "drizzle-orm": "^0.45.1",
+    "hono": "^4.6.0"
+  }
+}
