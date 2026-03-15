@@ -1,0 +1,18 @@
+name = "flareo-api"
+main = "services/api/index.ts"
+compatibility_date = "2025-04-08"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "flareo"
+database_id = "auto"
+migrations_dir = "drizzle"
+
+[[r2_buckets]]
+binding = "STORAGE"
+bucket_name = "flareo-files"
+
+[[workflows]]
+name = "flareo"
+binding = "FLAREO_WORKFLOW"
+class_name = "FlareoWorkflow"

@@ -1,0 +1,25 @@
+{
+  "name": "flareo",
+  "private": true,
+  "workspaces": ["apps/*", "services/*", "packages/*", "plugins/*"],
+  "devDependencies": {
+    "better-sqlite3": "^12.8.0",
+    "drizzle-kit": "^0.31.9",
+    "tsx": "^4.19.0",
+    "wrangler": "4.16.1"
+  },
+  "scripts": {
+    "build": "bun run --filter './packages/*' build && bun run --filter './services/*' build && bun run --filter './apps/*' build",
+    "dev": "npx wrangler dev --local",
+    "dev:remote": "npx wrangler dev --remote",
+    "dev:dashboard": "bun run --filter flareo-dashboard dev",
+    "dev:web": "bun run --filter flareo-web dev",
+    "deploy": "npx wrangler deploy",
+    "db:studio": "bunx drizzle-kit studio",
+    "db:migrate:local": "bunx wrangler d1 execute flareo --local --file=./drizzle/0000_init.sql && bunx wrangler d1 execute flareo --local --file=./drizzle/0001_drop_triggers.sql && bunx wrangler d1 execute flareo --local --file=./drizzle/0001_add_compiled.sql"
+  },
+  "dependencies": {
+    "@cloudflare/workerd-darwin-arm64": "^1.20260313.1",
+    "@vue-flow/background": "^1.3.2"
+  }
+}
