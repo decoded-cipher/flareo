@@ -15,10 +15,10 @@
     "dev:remote": "npx wrangler dev --remote",
     "dev:dashboard": "bun run --filter flareo-dashboard dev",
     "dev:web": "bun run --filter flareo-web dev",
-    "deploy": "npx wrangler deploy",
+    "deploy": "bun run --filter flareo-web build && npx wrangler deploy",
     "deploy:full": "sh scripts/deploy.sh",
     "db:studio": "bunx drizzle-kit studio",
-    "db:migrate:local": "bunx wrangler d1 execute flareo --local --file=./drizzle/0000_init.sql && bunx wrangler d1 execute flareo --local --file=./drizzle/0001_drop_triggers.sql && bunx wrangler d1 execute flareo --local --file=./drizzle/0001_add_compiled.sql"
+    "db:migrate:local": "bunx wrangler d1 execute flareo-app --local --file=./drizzle/0000_init.sql && bunx wrangler d1 execute flareo-app --local --file=./drizzle/0001_drop_triggers.sql && bunx wrangler d1 execute flareo-app --local --file=./drizzle/0001_add_compiled.sql"
   },
   "dependencies": {
     "@cloudflare/workerd-darwin-arm64": "^1.20260313.1",

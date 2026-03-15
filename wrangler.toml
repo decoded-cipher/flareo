@@ -1,6 +1,12 @@
-name = "flareo-api"
+name = "flareo-app"
 main = "services/api/index.ts"
 compatibility_date = "2025-04-08"
+
+# Static web app (apps/web) — build with: bun run --filter flareo-web build
+[assets]
+directory = "./apps/web/dist"
+binding = "ASSETS"
+run_worker_first = true
 
 [[d1_databases]]
 binding = "DB"
@@ -11,6 +17,12 @@ migrations_dir = "drizzle"
 [[r2_buckets]]
 binding = "STORAGE"
 bucket_name = "flareo-files"
+
+# Optional: create namespace then uncomment and set id:
+#   npx wrangler kv namespace create "FLAREO_KV"
+# [[kv_namespaces]]
+# binding = "KV"
+# id = "<YOUR_KV_NAMESPACE_ID>"
 
 [[workflows]]
 name = "flareo"

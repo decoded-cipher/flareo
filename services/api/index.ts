@@ -5,8 +5,8 @@ import { routes } from "./routes"
 
 export { FlareoWorkflow }
 
-const app = new Hono()
-app.use(
+const api = new Hono()
+api.use(
   "*",
   cors({
     origin: "*",
@@ -15,6 +15,11 @@ app.use(
     exposeHeaders: ["*"],
   })
 )
-routes(app)
+routes(api)
+
+// Mount API under /api; everything else is served from static assets (apps/web)
+const app = new Hono<{ Bindings: { ASSETS: { fetch: (req: Request) => Promise<Response> } } }>()
+  .route("/api", api)
+  .all("*", (c) => c.env.ASSETS.fetch(c.req.raw))
 
 export default { fetch: app.fetch }
